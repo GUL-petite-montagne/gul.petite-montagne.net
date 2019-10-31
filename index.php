@@ -15,6 +15,10 @@ foreach ($tokens as $token)
 
 //end of cleanup 
 
+$lug_name='GUL de la Petite Montagne';
+$lug_email='gul@petite-montagne.net';
+
+$server_address='http://gul.petite-montagne.net/';
 
 $geoloc="46.4398, 5.5352";
 $lat=46.4398; 
@@ -40,7 +44,7 @@ if (!file_exists('geocities.dat')){
 		$apiurl.='&format=xml';
 		$apiurl.='&polygon=1';
 		$apiurl.='&addressdetails=1';
-		$apiurl.='&email=wumzleradio@clewn.org';
+		$apiurl.='&email='.$lug_email;
 
 		$lon=0;
 		$lat=0;
@@ -134,7 +138,6 @@ if (isset($_GET['city'])){
 
 
 
-
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -175,7 +178,7 @@ if (isset($_GET['action'])&&$_GET['action']==='login'){
 				
 			if (in_array($_POST['email'], array_keys($lusers))){	
 				file_put_contents('./data/tokens/'.microtime(true), serialize(Array($token, $_POST['email']	)));
-				if (mail($_POST['email'], 'Votre code de connexion gul.petite-montagne.net', $token, 'From: gul@petite-montagne.net')){
+				if (mail($_POST['email'], 'Votre code de connexion gul.petite-montagne.net', $token, 'From: '.$lug_email)){
 					
 					
 				
@@ -210,8 +213,19 @@ if (isset($_GET['action'])&&$_GET['action']==='sso'){
 					if ($okforme){
 						$_SESSION['loggued']=true;
 						$lusers[$_POST['email']]['jailed']=false;
-						$lusers[$_POST['email']]['uid']=microtime(true);
-						file_put_contents('./data/users.dat', serialize($lusers));
+						
+						if (!isset($lusers[$_POST['email']]['uid'])){
+							$lusers[$_POST['email']]['uid']=microtime(true);
+							file_put_contents('./data/users.dat', serialize($lusers));
+							
+							}
+						
+						
+						$_SESSION['email']=$_POST['email'];
+						$_SESSION['uid']=$lusers[$_POST['email']]['uid'];
+						$_SESSION['name']=!isset($lusers[$_POST['email']]['name'])?'(pas de nom défini)':$lusers[$_POST['email']]['name'];
+						$_SESSION['city']=$lusers[$_POST['email']]['city'];
+						
 						unlink('./data/tokens/'.$token);
 						}
 					else {
@@ -239,6 +253,116 @@ if (isset($_GET['logout'])&&$_GET['logout']==='logout'){
 			echo 'Vous êtes à présent déconnecté. <a href="./">Retour'." à l'accueil</a></body></html>";
 			exit (0);
 		}
+
+
+if(isset($_GET['action'])&&$_GET['action']=='message'&&isset($_GET['uid'])){
+			if (!isset($_SESSION['loggued'])){
+				echo '<em>vous devez être connecté pour utiliser cette fonctionnalité</em></body></html>';
+				exit(0);
+				}
+			echo '<div>';
+			echo '<h1>Envoyer un message</h1>';
+			echo '<h3 style="display:inline;">Envoyer un message à : </h3>';
+			echo '<form action="./?action=postMessage" method="post" style="display:inline;"><select required name="uid">';
+			foreach ($lusers as $looozer){
+				
+				if (isset($looozer['uid'])&&!$looozer['jailed']) {
+				
+					echo '<option value="'.$looozer['uid'].'" ';
+					
+					if (strval($_GET['uid'])===strval($looozer['uid']))
+						echo ' selected ';
+						
+					echo ' >';
+					if (isset($looozer['name']))
+						echo htmlspecialchars($looozer['name']);
+					else echo '&lt;nom indéfini&gt;';
+					echo ' ('.$looozer['city'].')';
+					echo '</option>';
+					}
+				}
+				echo '<option value="-1">Message global à tous les inscrits. Tout abus de cette fonction pourra conduire à des sanctions</option>';
+				echo '</select><textarea rows="35" style="height:78%;width:100%;" name="message"></textarea>';
+			echo '<input style="float:right;" type="submit"></form>';
+			echo '<hr style="clear:both;"/>';
+			 echo '</div>';
+		}
+
+if(isset($_GET['action'])&&$_GET['action']=='postMessage'&&isset($_POST['uid'])&&isset($_POST['message'])){
+				
+				$lusers=unserialize(file_get_contents('./data/users.dat'));
+
+				
+				if (!isset($_SESSION['loggued'])){
+				echo '<em>vous devez être connecté pour utiliser cette fonctionnalité</em></body></html>';
+				exit(0);
+				}
+				$messageSubject=$lug_name.' - Message';
+					
+				if ($_POST['uid']==-1)
+					$messageSubject.=' Global';
+					
+				$messageSubject.=' de ';
+					
+				
+				$messageSubject.=$_SESSION['name'].', '.$_SESSION['city'];
+				
+				
+				
+				$message='"'.$_POST['message'].'"';
+				
+				$message.='
+				
+				Répondez à ce message <a href="'.$server_address.'?action=message&uid='.urlencode($_SESSION['uid']).'">ici</a>.';
+				
+				
+				$message = wordwrap($message, 70, "\r\n");
+
+				$to='';
+				
+				
+				if ($_POST['uid']!=-1){
+					foreach ($lusers as $looozer){
+						
+						if (isset($looozer['uid'])&&!$looozer['jailed']) {
+						
+						
+							if (strval($_POST['uid'])==strval($looozer['uid']))
+										$to.=key($lusers);
+								
+							}
+						}
+					
+					if(mail($to, $messageSubject, $message, 'MIME-Version: 1.0'."\r\n".'Content-type: text/html; charset=utf-8'."\r\n".'From: '.$lug_email)){
+						echo 'Mail envoyé. <a href="./">Accueil</a></body></html>';
+						exit(0);}
+					}
+					
+					else{
+						$counter=0;
+					foreach ($lusers as $looozer){
+						
+						if (isset($looozer['uid'])&&!$looozer['jailed']) {
+						
+								if(mail(key($lusers), $messageSubject, $message, 'MIME-Version: 1.0'."\r\n".'Content-type: text/html; charset=utf-8'."\r\n".'From: '.$lug_email))
+									$counter++;
+									
+									
+									
+										
+								
+							}
+						}
+					
+						echo $counter.' mails envoyés. <a href="./">Accueil</a></body></html>';
+						exit(0);
+					}
+					
+					
+					echo 'Il y a eu un problème pour envoyer le message';
+					
+					exit(0);
+			}
 ?>
 <a name="home"><em>Ce site n'utilise aucun cookie tiers dans aucun but que ce soit. Les seuls cookies utilisés par ce site sont simplement là pour maintenir les sessions des utilisateurs.</em></a>
 <div style="float:right;">
