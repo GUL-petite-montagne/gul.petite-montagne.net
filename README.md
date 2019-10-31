@@ -11,6 +11,8 @@ Pas besoin que ce soit des communes, du moment que le nom est reconnu dans OSM.
 
 À ce moment vous pouvez déployer les deux fichiers index.php et style.css sur votre serveur. 
 
+LA PREMIERE CHOSE A FAIRE est de vérifier que le répertoire ./data est bien inaccessible depuis un navigateur web. Si il est accessible, contactez votre hébergeur pour demander que les directives de .htaccess soient honorées (allowOveride All au lieu de allowOveride None dans /etc/apache2.conf, par exemple)
+
 Ce logiciel fonctionne avec de la serialisation key-value : il ne requiert pas de base de données. 
 
 Au premier affichage de la page, le script va aller interroger l'API d'OSM pour obtenir les coordonnées lat/longitude de chacune des localités précédement déclarées. 
