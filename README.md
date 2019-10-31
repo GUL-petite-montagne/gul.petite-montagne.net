@@ -29,6 +29,6 @@ Note:si vous souhaitez conserver le lien vers Nodni, modifiez son href pour remp
 TODO : 
 
 ajouter les fonction d'édition du profil (photo, nom ou pseudo, description)
-ajouter la fonction d'envoi de message
+
 ajouter la carte des membres
 
