@@ -426,10 +426,11 @@ foreach ($cities as $city){
 <span id="menu_bar">
 <span class="menuItemSelected">-<a href="./#home"> accueil </a>-</span>
 <span class="menuItem">-<a href="#why"> pourquoi Linux ? </a>-</span>
-<span class="menuItem">-<a href="#map"> la carte </a>-</span>
+<!--<span class="menuItem">-<a href="#map"> la carte </a>-</span>-->
 <span class="menuItem">-<a href="#members"> liste des membres </a>-</span>
 <span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
 <span class="menuItem">-<a href="#irc"> Salon de discussion </a>-</span>
+<span class="menuItem">-<a href="#recycle">Recyclage</a>-</span>
 
 </span>
 <hr/>
@@ -464,6 +465,8 @@ dont vous trouverez la liste plus bas sur cette page. Installer Linux est très 
 <span class="menuItem">-<a href="#members"> liste des membres </a>-</span>
 <span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
 <span class="menuItem">-<a href="#irc"> Salon de discussion </a>-</span>
+<span class="menuItem">-<a href="#recycle">Recyclage</a>-</span>
+
 
 </span>
 
@@ -529,6 +532,8 @@ foreach ($user as $onezer){
 <span class="menuItemSelected">-<a href="#members"> liste des membres </a>-</span>
 <span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
 <span class="menuItem">-<a href="#irc"> Salon de discussion </a>-</span>
+<span class="menuItem">-<a href="#recycle">Recyclage</a>-</span>
+
 
 </span>
 
@@ -538,10 +543,38 @@ foreach ($user as $onezer){
 <a name="irc"><h2>Salon de discussion</h2></a>
 <iframe src="https://kiwiirc.com/client/irc.freenode.net/#gul-petite-montagne" style="border: 0; height: 450px; width: 100%;"></iframe>
 </div>
+<span id="menu_bar">
+<span class="menuItem">-<a href="./#home"> accueil </a>-</span>
+<span class="menuItem">-<a href="#why"> pourquoi Linux ? </a>-</span>
+<!--<span class="menuItem">-<a href="#map"> la carte </a>-</span>-->
+<span class="menuItem">-<a href="#members"> liste des membres </a>-</span>
+<span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
+<span class="menuItemSelected">-<a href="#irc"> Salon de discussion </a>-</span>
+<span class="menuItem">-<a href="#recycle">Recyclage</a>-</span>
+
+
+</span>
+
+<div>
+<a name="recyle"><h2>Recyclage</h2></a>
+<h2>Nous récupérons les vieux ordinateurs même hors service</h2>
+<h3>Pour servir de source de pièces pour améliorer de vieilles machine ou en assembler une à partir de plusieurs autres</h3>
+Laisser votre ancien ordinateur pour le recyclage c'est 
+<ul>
+<li>Un geste citoyen<br/>Vous permettez à des gens ayant peu de moyen de maintenir leur équipement numérique à jour</li>
+<li>Un geste écologique<br/>Vous permettez à du matériel ancien de servir à nouveau, une fois remis en état par nos soins</li>
+<li>Un geste sécurité<br/>Auquel on ne pense pas forcément quand on se débarrasse du matériel : notre GUL garantis l'effacement le plus définitif possible des supports de mémoire interne pour empêcher à 99% toute tentative de restauration de vos anciennes données personnelles. </li>
+</ul>
+<h3>N'hésitez pas à entrer en contact avec nos membres si vous avez du materiel qui vous encombre et que vous souhaitez donner.</h3>
+
+
+
+
+</div>
 <?php
 }//if city is not set
 
-if (!($_SESSION['logged'])){
+if (!isset($_SESSION['loggued'])){
 ?>
 <hr/><hr/><hr/><hr><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><div>
 <a name="login"><h2>Se connecter - si vous avez déjà un compte</h2></a><form action="./?action=login" method="post">adresse mail : <input type="text" name="email" value="email@example.com"/><input type="submit"/></form>
@@ -555,7 +588,7 @@ Localité :
 foreach ($cities as $city)
 		echo '<option value="'.htmlspecialchars($city).'">'.htmlspecialchars($city).'</option> ';
 	
-}
+
 ?>
 
 </select>
@@ -566,7 +599,7 @@ foreach ($cities as $city)
 
 </div>
 <?php
-
+}
 ?>
 <hr/><hr/><hr/><hr/><hr/><h5 style="background-color:black;">
 Ce site &copy; 2019 le GUL de la Petite Montagne - CNIL : N/A - background image : a.stafiniak [Attribution] - contact: <a href="mailto:gul@petite-montagne.net">gul@petite-montagne.net</a>. 
