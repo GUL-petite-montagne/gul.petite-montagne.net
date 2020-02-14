@@ -460,7 +460,7 @@ dont vous trouverez la liste plus bas sur cette page. Installer Linux est très 
 <span id="menu_bar">
 <span class="menuItem">-<a href="./#home"> accueil </a>-</span>
 <span class="menuItemSelected">-<a href="#why"> pourquoi Linux ? </a>-</span>
-<span class="menuItem">-<a href="#map"> la carte </a>-</span>
+<!--<span class="menuItem">-<a href="#map"> la carte </a>-</span>-->
 <span class="menuItem">-<a href="#members"> liste des membres </a>-</span>
 <span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
 <span class="menuItem">-<a href="#irc"> Salon de discussion </a>-</span>
@@ -492,17 +492,17 @@ foreach ($user as $onezer){
 							echo '<img style="float:left;width:10%;"  class="memberImg" src="./pic/'.$onezer['pic'].'" alt="Image de profil"/>';
 						else
 							echo '<img style="float:left;width:10%;" class="memberImg" src="./backgrrrnd.jpg" alt="Image de profil"/>';
-						echo 'Nom ou pseudonyme : ';
-						if (isset($onezer['name']))
-							echo htmlspecialchars($onezer['name']);
-						else echo '<em>non renseigné</em>';
+						//echo 'Nom ou pseudonyme : ';
+						//if (isset($onezer['name']))
+						//	echo htmlspecialchars($onezer['name']);
+						//else echo '<em>non renseigné</em>';
 						echo '<br/>';
 						echo 'Localité : ';
 							echo htmlspecialchars($onezer['city']);
 						echo '<br/>';
-						if (isset($onezer['desc']))
-							echo '"<em>'.htmlspecialchars($onezer['desc']).'</em>"';
-						else echo "Ce membre n'a pas fourni de description";
+						//if (isset($onezer['desc']))
+						//	echo '"<em>'.htmlspecialchars($onezer['desc']).'</em>"';
+						//else echo "Ce membre n'a pas fourni de description";
 						
 						echo '<br/>';
 						echo '<a style="float:right" href="./?action=message&uid='.urlencode($onezer['uid']).'">Envoyer un message à ce membre</a>';
@@ -525,7 +525,7 @@ foreach ($user as $onezer){
 <span id="menu_bar">
 <span class="menuItem">-<a href="./#home"> accueil </a>-</span>
 <span class="menuItem">-<a href="#why"> pourquoi Linux ? </a>-</span>
-<span class="menuItem">-<a href="#map"> la carte </a>-</span>
+<!--<span class="menuItem">-<a href="#map"> la carte </a>-</span>-->
 <span class="menuItemSelected">-<a href="#members"> liste des membres </a>-</span>
 <span class="menuItem">-nos <a target="new" href="http://nodni.clewn.org/?city=Valzin+en+petite+Montagne">évènements et manifestations</a> sur nodni-</span>
 <span class="menuItem">-<a href="#irc"> Salon de discussion </a>-</span>
